@@ -1,6 +1,5 @@
 const htttp = require('http');
 const fs = require('fs');
-const _ = require('lodash');
 
 const server = htttp.createServer((req, res) => {
     res.setHeader('content-type', 'text/html');
