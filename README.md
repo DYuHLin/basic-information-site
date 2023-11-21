@@ -1,1 +1,2 @@
 # basic-information-site
+I have applied the basics of what I have learnt with Node.js and express js to create a simple website. It has been fun learning how to create a server and how to navigate and use it to send html pages. Excited to learn more as I am not very experienced in it yet.
