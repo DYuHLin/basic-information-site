@@ -1,45 +1,33 @@
-const htttp = require('http');
-const fs = require('fs');
+const express = require('express');
 
-const server = htttp.createServer((req, res) => {
-    res.setHeader('content-type', 'text/html');
+const app = express();
 
-    let path = './views/';
-    switch(req.url) {
-        case '/':
-            path += 'index.html';
-            res.statusCode = 200;
-            break;
-        case '/about':
-            path += 'about.html';
-            res.statusCode = 200;
-            break;
-        case '/about-me':
-            path += '/about.html';
-            res.statusCode = 301
-            break;
-        case '/contact-me':
-            path += 'contact-me.html';
-            res.statusCode = 200;
-            break;
-        default:
-            path += '404.html';
-            res.statusCode = 404;
-            break;
-        
-    };
+app.use(express.static('public'));
 
-    fs.readFile(path, (err, data) => {
-        if(err) {
-            console.log(err);
-            res.end();
-        } else {
-            res.write(data);
-            res.end();
-        };
-    });
+//creating the server
+app.listen(8080);
+
+//sending index page
+app.get('/', (req, res) => {
+    res.sendFile('./views/index.html', { root: __dirname });
 });
 
-server.listen(8080, 'localhost', () => {
-    console.log('Server is running')
+//sending about page
+app.get('/about', (req, res) => {
+    res.sendFile('./views/about.html', { root: __dirname });
+});
+
+//sending contact page
+app.get('/contact-me', (req, res) => {
+    res.sendFile('./views/contact-me.html', { root: __dirname });
+});
+
+//redirecting to about page
+app.get('/about-page', (req, res) => {
+    res.redirect('/about');
+});
+
+//404 page if user goes to an invalid link
+app.use((req, res) => {
+    res.sendFile('./views/404.html', { root: __dirname });
 });
